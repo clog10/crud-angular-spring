@@ -16,11 +16,12 @@ export class CustomerAdd {
     initialValue: null,
   });
 
+  id: Signal<string | undefined> = signal(undefined);
   name: Signal<string> = signal('');
   email: Signal<string> = signal('');
 
   addCustomer(form: NgForm) {
-    const customer = { name: this.name, email: this.email };
+    const customer = { id: this.id  , name: this.name, email: this.email };
     this.customerService.createCustomer(customer).subscribe(() => {
       form.resetForm();
     });
