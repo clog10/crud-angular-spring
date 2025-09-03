@@ -15,7 +15,13 @@ export class CustomerService {
   public constructor(private http:HttpClient) { }
 
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>("http://localhost:8080/api/customers/listar");
+    //return this.http.get<Customer[]>("http://localhost:8080/api/customers/listar");
+    return this.http.get<Customer[]>(this.api().concat("/listar"));
+  }
+
+  createCustomer(customer: Customer): Observable<Customer> {
+    const body = {name: customer.name(), email: customer.email()}
+    return this.http.post<Customer>(this.api().concat("/save"), body);
   }
 
 }
