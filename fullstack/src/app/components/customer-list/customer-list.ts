@@ -13,8 +13,23 @@ export class CustomerList {
 
   private readonly customerService = inject(CustomerService);
 
-  readonly customers: Signal<Customer[]> = toSignal(
-    this.customerService.getCustomers(), { initialValue: [] as Customer[] }
-  );
+  readonly customers: WritableSignal<Customer[]> = signal([] as Customer[]);
+
+  constructor() {
+    this.customerService.getCustomers().subscribe(customers => {
+      this.customers.set(customers);
+    });
+  }
+
+  deleteCustomer(customer: Customer){
+    this.customerService.deleteCustomerById(customer).subscribe(
+      {
+        next: (res) => {
+          console.log(res.message);
+          this.customers.update(customers => customers.filter(c => c.id !== customer.id));
+        }
+      }
+    );
+  }
 
 }

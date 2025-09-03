@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer } from '../customer';
 
@@ -22,6 +22,11 @@ export class CustomerService {
   createCustomer(customer: Customer): Observable<Customer> {
     const body = {name: customer.name(), email: customer.email()}
     return this.http.post<Customer>(this.api().concat("/save"), body);
+  }
+
+  deleteCustomerById(customer: Customer): Observable<any>{
+    const id = customer.id;
+    return this.http.delete(this.api().concat("/eliminar/" + id));
   }
 
 }
