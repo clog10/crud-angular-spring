@@ -16,7 +16,7 @@ export class CustomerAdd {
     initialValue: null,
   });
 
-  id: Signal<string | undefined> = signal(undefined);
+  id: Signal<number> = signal(0);
   name: Signal<string> = signal('');
   email: Signal<string> = signal('');
 
