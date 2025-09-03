@@ -1,6 +1,7 @@
 package com.ibm.crudfullstack.crud_fullstack_angular.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,11 +74,11 @@ public class CustomerController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         try {
-            customerService.getCustomerById(id);
-            return new ResponseEntity<>("Customer deleted successfully", HttpStatus.OK);
-
+            customerService.deleteCustomer(id);
+            return ResponseEntity.ok().body(Map.of("message", "Customer deleted successfully"));
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Customer not found"));
         }
     }
 
